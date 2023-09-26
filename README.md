@@ -1,5 +1,6 @@
-# cs490-front
+# cs490 Frontend
 
+**Requires Node.js**
 ## Project setup
 ```
 npm install

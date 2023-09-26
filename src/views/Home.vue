@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <div class="accordion" id="accordionExample">
-        <div  v-for="movie in queries.movies" class="accordion-item">
+        <div  v-for="movie in queries.movies" class="accordion-item" :key="movie.film_id">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+movie.film_id">
               {{ movie.title }}
@@ -25,7 +25,7 @@
     </div>
     <div class="col">
       <div class="accordion" id="accordionExample">
-        <div  v-for="actor in queries.actors" class="accordion-item">
+        <div  v-for="actor in queries.actors" class="accordion-item" :key="actor.actor_id">
           <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+actor.actor_id">
             {{ actor.first_name+" "+actor.last_name }}
