@@ -1,47 +1,22 @@
-<!-- eslint-disable vue/require-v-for-key -->
 <template>
-<div class="row">
-  <div class="col">
-    <div class="accordion" id="accordionExample">
-      <div  v-for="movie in queries.movies" class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+movie.film_id">
-            {{ movie.title }}
-          </button>
-        </h2>
-        <div :id="'a'+movie.film_id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <h6><strong>Description: </strong>{{ movie.description }}</h6>
-            <h6><strong>Release Year: </strong>{{ movie.release_year }}</h6>
-            <h6><strong>Rating: </strong>{{ movie.rating }}</h6>
-            <h6><strong>Length: </strong>{{ movie.length+" mins" }}</h6>
-            <h6><strong>Language: </strong>{{ movie.name }}</h6>
-            <h6><strong>Rental Price: </strong>{{ "$"+movie.rental_rate}}</h6>
-            <h6><strong>Rental Duration: </strong>{{ movie.rental_duration+" days" }}</h6>
-            
-          </div>
-        </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <router-link class="nav-link" to="/">Events</router-link>
+        
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/movies">Movies</router-link>
+          </li>
+        </ul>
       </div>
-   </div>
-  </div>
-  <div class="col">
-    <div class="accordion" id="accordionExample">
-      <div  v-for="actor in queries.actors" class="accordion-item">
-        <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+actor.actor_id">
-          {{ actor.first_name+" "+actor.last_name }}
-        </button>
-        </h2>
-        <div :id="'a'+actor.actor_id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <!-- <h6><strong>Last Updated:</strong> {{ actor.last_update }}</h6> -->
-            <h6><strong>Number of Movies: </strong>{{ actor.film_count }}</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </nav>
+
+  <router-view />
 </template>
 
 <script>
