@@ -4,6 +4,8 @@ import { io } from "socket.io-client";
 export const state = reactive({
     connected: false,
     topMovies: '',
+    topActors: '',
+    queries:'',
     barEvents: [],
     message:''
   });
@@ -15,5 +17,7 @@ socket.on('message',(_,mess)=>{
 })
 
 socket.on("queries", (rows)=>{
-    state.topMovies=rows;
+    state.queries=rows
+    state.topMovies=rows.movies;
+    state.topActors=rows.actors;
 })

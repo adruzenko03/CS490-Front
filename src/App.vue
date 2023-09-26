@@ -1,39 +1,65 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
-
-  <div class="accordion" id="accordionExample">
-    <div  v-for="movie in topMovies" class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+movie.film_id">
-        {{ movie.title }}
-      </button>
-    </h2>
-    <div :id="'a'+movie.film_id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+<div class="row">
+  <div class="col">
+    <div class="accordion" id="accordionExample">
+      <div  v-for="movie in queries.movies" class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+movie.film_id">
+            {{ movie.title }}
+          </button>
+        </h2>
+        <div :id="'a'+movie.film_id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><strong>Description: </strong>{{ movie.description }}</h6>
+            <h6><strong>Release Year: </strong>{{ movie.release_year }}</h6>
+            <h6><strong>Rating: </strong>{{ movie.rating }}</h6>
+            <h6><strong>Length: </strong>{{ movie.length+" mins" }}</h6>
+            <h6><strong>Language: </strong>{{ movie.name }}</h6>
+            <h6><strong>Rental Price: </strong>{{ "$"+movie.rental_rate}}</h6>
+            <h6><strong>Rental Duration: </strong>{{ movie.rental_duration+" days" }}</h6>
+            
+          </div>
+        </div>
+      </div>
+   </div>
+  </div>
+  <div class="col">
+    <div class="accordion" id="accordionExample">
+      <div  v-for="actor in queries.actors" class="accordion-item">
+        <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#a'+actor.actor_id">
+          {{ actor.first_name+" "+actor.last_name }}
+        </button>
+        </h2>
+        <div :id="'a'+actor.actor_id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <!-- <h6><strong>Last Updated:</strong> {{ actor.last_update }}</h6> -->
+            <h6><strong>Number of Movies: </strong>{{ actor.film_count }}</h6>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-
-</div></template>
+</div>
+</template>
 
 <script>
-import {state} from "@/socket";
+import { state } from "@/socket";
 
 export default {
-  name: 'App',
+  name: "App",
   computed: {
-    topMovies() {
-      return state.topMovies;
+    queries() {
+      return state.queries;
     },
-    ping(){
+    ping() {
       return state.message;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-@import 'bootstrap/dist/css/bootstrap.css'
+@import "bootstrap/dist/css/bootstrap.css";
 </style>
