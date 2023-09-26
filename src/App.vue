@@ -1,26 +1,30 @@
+<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+  <button type="button" class="btn btn-primary">Primary</button>
+  <div class="list-group" v-for="movie in topMovies">
+  <a href="#" class="list-group-item list-group-item-action">
+    {{movie.title}}
+  </a>
+
+</div></template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {state} from "@/socket";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    topMovies() {
+      return state.topMovies;
+    },
+    ping(){
+      return state.message;
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import'~bootstrap/dist/css/bootstrap.css'
 </style>
