@@ -4,14 +4,14 @@
       <label  class="btn btn-outline-primary" for="ID">ID</label>
     
       <input v-model="selected" type="radio" class="btn-check" :value="'First'" id="First" autocomplete="off">
-      <label class="btn btn-outline-primary" for="First">First</label>
+      <label class="btn btn-outline-primary" for="First">First Name</label>
     
       <input v-model="selected" type="radio" class="btn-check" :value="'Last'" id="Last" autocomplete="off">
-      <label class="btn btn-outline-primary" for="Last">Last</label>
+      <label class="btn btn-outline-primary" for="Last">Last Name</label>
     </div>
     
       <div class="mb-3">
-        <label for="searchBar" class="form-label">Enter Your Customer {{ selected }}</label>
+        <label for="searchBar" class="form-label">Enter Your Customer's {{ selected }} <span v-if="selected=='ID'" /> <span v-else>Name</span></label>
         <input v-model="inp" onkeydown="return /[a-z1-9 ]/i.test(event.key)" class="form-control" id="searchBar" >
         
       </div>
@@ -42,7 +42,7 @@
     </template>
     
     <script>
-    import { socket,state } from "@/socket";
+    import { socket,state } from "../socket";
     export default{
         data(){
             return {selected:"ID", inp:""}
