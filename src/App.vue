@@ -15,6 +15,12 @@
           <li class="nav-item active">
             <router-link class="nav-link" to="/customers">Customers</router-link>
           </li>
+          <li class="nav-item active">
+
+            <button class="nav-link" @click="createPDF">
+              Reports
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -23,8 +29,8 @@
 </template>
 
 <script>
-import { state } from "@/socket";
-
+import { state,socket } from "@/socket";
+import jsPDF from "jspdf";
 export default {
   name: "App",
   computed: {
@@ -35,6 +41,12 @@ export default {
       return state.message;
     },
   },
+  methods: {
+  createPDF () {
+    socket.emit('pdfGen')
+  }
+}
+
 };
 </script>
 
