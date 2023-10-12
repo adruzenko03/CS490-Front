@@ -56,22 +56,22 @@ describe('Unit Testing', () => {
       queries() {
         return {
           movies:
-          [{
-            film_id: 382,
-            title: 'GRIT CLOCKWORK',
-            description: 'A Thoughtful Display of a Dentist And a Squirrel who must Confront a Lumberjack in A Shark Tank',
-            release_year: 2006,
-            language_id: 1,
-            original_language_id: null,
-            rental_duration: 3,
-            rental_rate: 0.99,
-            length: 137,
-            replacement_cost: 21.99,
-            rating: 'PG',
-            special_features: 'Trailers,Deleted Scenes',
-            last_update: '2006-02-15T10:03:42.000Z',
-            name: 'English'
-          }],
+            [{
+              film_id: 382,
+              title: 'GRIT CLOCKWORK',
+              description: 'A Thoughtful Display of a Dentist And a Squirrel who must Confront a Lumberjack in A Shark Tank',
+              release_year: 2006,
+              language_id: 1,
+              original_language_id: null,
+              rental_duration: 3,
+              rental_rate: 0.99,
+              length: 137,
+              replacement_cost: 21.99,
+              rating: 'PG',
+              special_features: 'Trailers,Deleted Scenes',
+              last_update: '2006-02-15T10:03:42.000Z',
+              name: 'English'
+            }],
           actors: [{
             actor_id: 23,
             first_name: 'SANDRA',
@@ -84,10 +84,10 @@ describe('Unit Testing', () => {
     }
   })
 
-it('Displays movies + actors on the home page', ()=>{
-  expect(wrapper2.find('div[id="a382"]').exists()).toBe(true)
-  expect(wrapper2.find('div[id="a23"]').exists()).toBe(true)
-})
+  it('Displays movies + actors on the home page', () => {
+    expect(wrapper2.find('div[id="a382"]').exists()).toBe(true)
+    expect(wrapper2.find('div[id="a23"]').exists()).toBe(true)
+  })
 
   it('Displays Search Bar', async () => {
     expect(wrapper.find('label[for="ID"]').exists()).toBe(true)
@@ -110,6 +110,6 @@ it('Displays movies + actors on the home page', ()=>{
   it('Contains Update Modal', async () => {
     expect(wrapper.html()).toContain(`<div class="modal-body">
         <h1>Update Customer</h1>`)
-    })
+  })
 
 })
