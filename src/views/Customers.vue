@@ -1,4 +1,65 @@
 <template>
+  <!--Add Customer Modal-->
+  <div class="modal fade" id="newCust" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h1>Add Customer</h1>
+          <form>
+            <label>Email:</label>
+            <input type="email" v-model="email">
+            <br />
+            <label>First Name:</label>
+            <input onkeydown="return /[a-z]/i.test(event.key)" v-model="firstName">
+            <br />
+            <label>Last Name:</label>
+            <input onkeydown="return /[a-z]/i.test(event.key)" v-model="lastName">
+            <br />
+            <label>Store:</label>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+              <input v-model="store" type="radio" class="btn-check" :value="1" id="1" autocomplete="off" checked>
+              <label class="btn btn-outline-primary" for="1">Store 1</label>
+
+              <input v-model="store" type="radio" class="btn-check" :value="2" id="2" autocomplete="off">
+              <label class="btn btn-outline-primary" for="2">Store 2</label>
+            </div>
+            <br />
+            <label>Address 1:</label>
+            <input onkeydown="return /[a-z 0-9.-]/i.test(event.key)" v-model="address">
+            <br />
+            <label>Address 2:</label>
+            <input onkeydown="return /[a-z 0-9.-]/i.test(event.key)" v-model="address2">
+            <br />
+            <label>District:</label>
+            <input onkeydown="return /[a-z]/i.test(event.key)" v-model="district">
+            <br />
+            <label>City:</label>
+            <input onkeydown="return /[a-z]/i.test(event.key)" v-model="city">
+            <br />
+            <label>Phone:</label>
+            <input inputmode="numeric" v-model="phone">
+            <br />
+            <label>Postal Code:</label>
+            <input inputmode="numeric" v-model="postalCode">
+            <br />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <p v-if="this.errMess != ''">{{ this.errMess }}</p>
+          <button @click="addCust" type="button" class="btn btn-primary">Submit</button> <!-- data-bs-dismiss="modal" -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
     <input v-model="selected" type="radio" class="btn-check" :value="'ID'" id="ID" autocomplete="off" checked>
     <label class="btn btn-outline-primary" for="ID">ID</label>
@@ -13,10 +74,17 @@
   <div class="mb-3">
     <label for="searchBar" class="form-label">Enter Your Customer's {{ selected }} <span v-if="selected == 'ID'" /> <span
         v-else>Name</span></label>
-    <input v-model="inp" onkeydown="return /[a-z1-9 ]/i.test(event.key)" class="form-control" id="searchBar">
-
+    <input v-model="inp" onkeydown="return /[a-z0-9 ]/i.test(event.key)" class="form-control" id="searchBar">
   </div>
-  <button @click="submit" class="btn btn-primary">Submit</button>
+
+  <div class="mb-3" style="display: flex; gap:5px">
+
+    <button @click="submit" class="btn btn-primary">Search</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCust">
+      New Customer
+    </button>
+  </div>
+
   <div class="accordion" id="accordionExample">
     <div v-for="customer in custRes" class="accordion-item" :key="customer.customer">
       <h2 class="accordion-header">
@@ -39,7 +107,7 @@
                       {{ movie }}
                     </div>
                     <div v-if="!removedMovies.includes(movie)">
-                      <button @click="finRent(movie,customer.customer_id)" class="btn btn-primary">Finish Rent</button>
+                      <button @click="finRent(movie, customer.customer_id)" class="btn btn-primary">Finish Rent</button>
                     </div>
                     <div v-else>
                       <button disabled class="btn btn-success">Success!</button>
@@ -67,7 +135,11 @@
 import { socket, state } from "../socket";
 export default {
   data() {
-    return { selected: "ID", inp: "", confirm: 0, removedMovies:[] }
+    return {
+      selected: "ID", inp: "", confirm: 0, removedMovies: [],
+      email: "", firstName: "", lastName: "", store: 1, address: "", address2: "", district: "", city: "", postalCode: "",
+      errMess: ""
+    }
   },
   computed: {
     custRes() {
@@ -76,11 +148,11 @@ export default {
   },
   methods: {
     submit() {
-      if(this.inp==''){
+      if (this.inp == '') {
         socket.emit('custSearch', '')
 
       }
-      else{
+      else {
         socket.emit('custSearch', { [this.selected]: this.inp })
       }
     },
@@ -92,18 +164,41 @@ export default {
         this.confirm = 1
       }
       else {
-        socket.emit('deleteCust',custId)
-        socket.on("deleteConf", ()=>{
+        socket.emit('deleteCust', custId)
+        socket.on("deleteConf", () => {
           this.submit()
           this.reset()
         })
       }
     },
-    finRent(movie,customer_id){
-      socket.emit('finRent',movie,customer_id)
-      socket.on('rentConf',()=>{
+    finRent(movie, customer_id) {
+      socket.emit('finRent', movie, customer_id)
+      socket.on('rentConf', () => {
         this.removedMovies.push(movie)
       })
+    },
+    addCust() {
+      if (this.email.length == 0 || this.firstName.length == 0 || this.lastName.length == 0 || this.address.length == 0 || this.district.length == 0 || this.postalCode.length == 0)
+        this.errMess = "Error: Please include all provided fields"
+      else if (this.phone.length != 10)
+        this.errMess = "Please provide a valid phone number"
+      else if (!state.queries.cities.includes(this.city))
+        this.errMess = "Error: Please include a valid city"
+      else
+        socket.emit('addCust', { email: this.email, firstName: this.firstName, lastName: this.lastName, store:this.store,address: this.address, address2: this.address2, district: this.district, postalCode: this.postalCode, phone: this.phone, city: this.city })
+        socket.on('addConf',()=>{
+          this.email='',
+          this.firstName='',
+          this.lastName='',
+          this.address='',
+          this.address2='',
+          this.district='',
+          this.city='',
+          this.phone='',
+          this.postalCode=''
+          this.errMess="Success!"
+          this.submit()
+        })
     }
   },
   beforeMount() {
@@ -111,4 +206,8 @@ export default {
   },
 }
 </script>
-    
+<style>
+form>* {
+  margin: 5px
+}
+</style>
