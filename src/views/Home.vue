@@ -44,7 +44,7 @@
   </template>
   
   <script>
-  import { state } from "@/socket";
+  import { state } from "../socket";
   
   export default {
     name: "App",

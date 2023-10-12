@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { state,socket } from "@/socket";
+import { state,socket } from "../socket";
 import jsPDF from "jspdf";
 export default {
   name: "App",

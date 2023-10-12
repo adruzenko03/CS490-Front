@@ -151,7 +151,7 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCust">
       New Customer
     </button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upCust">
+    <button type="button" id='upCust' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upCust">
       Update Customer
     </button>
   </div>
