@@ -23,7 +23,7 @@ socket.on("customerRes", (rows)=>{
 })
 
 socket.on("pdfRes",(rows)=>{
-  var doc = new jsPDF();
+  let doc = new jsPDF();
   let pageHeight= doc.internal.pageSize.height
 
   doc.text("Name", 10, 10);
